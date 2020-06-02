@@ -4,24 +4,29 @@ import Message from '../Message';
 import { scrollToBottom } from '../../utils/common';
 import { IMessage } from '../../types';
 import StyledMessagesList from './StyledMessagesList';
-
+import { AnyAction } from 'redux';
+import { connectSocket } from '../../store/socket/actions';
+import { readRecord } from 'src/utils/storage-service';
 interface IChatAreaState {
-  messageState: {
-    messages: []
-  }
+  messages: []
 }
 
 interface IChatAreaProps {
-    messages: [],
-    connect:() => void
+  connectChat:() => void
 }
 
 export class ChatArea extends React.Component {
   
+  public state = {
+    username: readRecord("username") || "guest",
+    messages: []
+  };
+
   private chatAreaRef = React.createRef<HTMLDivElement>();
   public render() {
-    const { messages } = this.props as IChatAreaProps;
-    connect();
+    const { connectChat } = this.props as IChatAreaProps;
+    const { messages } = this.state;
+    connectChat();
     return (
       <StyledMessagesList ref={this.chatAreaRef}>
           {messages.map((element: IMessage, idx: number) => {
@@ -46,7 +51,13 @@ export class ChatArea extends React.Component {
 }
 
 const mapStateToProps = (state: IChatAreaState) => ({
-  messages: state.messageState.messages
+  messages: state.messages
 });
 
-export default connect(mapStateToProps, null)(ChatArea);
+const mapDispatchToProps = (
+  dispatch: React.Dispatch<AnyAction>
+): IChatAreaProps => ({
+  connectChat: () => dispatch(connectSocket()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatArea);
