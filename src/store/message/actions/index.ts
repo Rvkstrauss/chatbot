@@ -19,7 +19,7 @@ export const sendMessage = (message: IMessage) => {
   };
 };
 
-export const messageSent = () => {
+export const messageSent = (message: IMessage) => {
   return {
     type: MESSAGE_SENT
   };

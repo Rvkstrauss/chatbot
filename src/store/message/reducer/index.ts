@@ -14,13 +14,15 @@ function messageReducer(state = INITIAL_STATE, action: {username?: string, type:
         state, {username: action.username}
       );
     case SEND_MESSAGE_RESPONSE:
-      const isMessageTypeSent = (action.message.from === state.username);
-      action.message = Object.assign(action.message, {type: isMessageTypeSent ? 'sent'  : 'received'});
+      if (!action.message) {return state};
+      // const isMessageTypeSent = (action.message.from === state.username);
+      // action.message = Object.assign(action.message, {type: isMessageTypeSent ? 'sent'  : 'received'});
       return {
         ...state,
         messages: [...state.messages, action.message]
       };
-    case MESSAGE_SENT:
+    case MESSAGE_SENT:  
+
     default:
       return state;
   }

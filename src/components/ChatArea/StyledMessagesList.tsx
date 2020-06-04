@@ -8,6 +8,7 @@ const StyledMessagesList = styled("div")`
   width: 100%;
   height: 100%;
   display: block;
+  padding: 20px;
   clear: both;
   overflow: scroll;
   ul {

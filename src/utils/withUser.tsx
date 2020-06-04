@@ -8,6 +8,7 @@ export const withUser = (WrappedComponent: React.ComponentClass | React.Function
       return <AppContextConsumer>
         {value => <WrappedComponent
           {...this.props as any}
+          messages={value.state.messages}
           username={value.state.username}
           changeUsername={value.changeUsername}
         />}

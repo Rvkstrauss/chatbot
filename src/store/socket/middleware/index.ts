@@ -24,7 +24,7 @@ const socketMiddleware = (store: any) => {
 
       case SEND_MESSAGE_REQUEST:
         socket.sendMessage(action.message);
-        store.dispatch(messageSent());
+        store.dispatch(messageSent(action.message));
         break;
 
       default:

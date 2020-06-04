@@ -1,31 +1,27 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const bot = require("./bot");
+app.use(express.static(path.join(__dirname, "../build")));
 
-app.use(express.static(path.join(__dirname, '../build')));
+app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
-
-io.on('connect', (socket) => {
-  
-  io.emit('broadcast', '[Server]: Welcome stranger!');
-  
-  socket.on('message', (msg) => {
+io.on("connect", (socket) => {
+  socket.on("message", (msg) => {
+    const dialog = bot.respond(msg);
     
-    const dialog = bot[msg.type];
-
     // console.log(`message received from user: ${msg.from}`);
     // console.log(`message received content: ${msg.content}`);
-    io.emit('message', msg);
+    console.log('sent', msg)
+    dialog.map(msg => io.emit("message", msg));
   });
-
 });
 
 const port = process.env.PORT || 3001;
-app.set('port', port);
+app.set("port", port);
 
 http.listen(port, () => {
-  console.log('listening on *:3001');
+  console.log("listening on *:3001");
 });

@@ -1,16 +1,16 @@
-import * as React from 'react';
-import BotProvider from './utils/userProvider'
+import React, {Component} from 'react';
+// import BotProvider from './utils/userProvider'
 import ChatPage from './components/Chat/ChatPage';
 import { theme } from './theme';
 
-class App extends React.Component {
+class App extends Component {
   public render() {
     return (
-      <BotProvider>
+      // <BotProvider>
         <StyledAppContainer theme={theme}>
           <ChatPage/>
         </StyledAppContainer>
-      </BotProvider>
+      // </BotProvider>
     )
   }
 }

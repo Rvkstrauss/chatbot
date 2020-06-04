@@ -5,11 +5,12 @@ import { theme, ThemeProvider } from '../theme';
 export interface IAppContext {
   
   username: string;
-  ctrlEnterOptionsTitle: string;
-  ctrlEnterSendingOptions: {
-    option1: string;
-    option2: string;
-  }
+  messages: []
+  // ctrlEnterOptionsTitle: string;
+  // ctrlEnterSendingOptions: {
+  //  option1: string;
+  //  option2: string;
+  // }
 }
 
 const context = React.createContext<IAppContext | any>(null);
@@ -20,6 +21,7 @@ export const AppContextConsumer = context.Consumer;
 export default class UserProvider extends React.Component {
   public state = {
     username: readRecord('username') || 'guest',
+    messages: []
   };
 
   public render() {

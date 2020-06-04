@@ -1,11 +1,11 @@
-import * as io from 'socket.io-client';
-import { IMessage } from 'src/types';
-import { readRecord } from 'src/utils/storage-service';
+import * as io from "socket.io-client";
+import { IMessage } from "src/types";
+import { readRecord } from "src/utils/storage-service";
 
 const EVENTS = {
-  CONNECT: 'connect',
-  DISCONNECT: 'disconnect',
-  MESSAGE: 'message'
+  CONNECT: "connect",
+  DISCONNECT: "disconnect",
+  MESSAGE: "message",
 };
 
 export default class Socket {
@@ -15,12 +15,15 @@ export default class Socket {
   private onMessage: (message: IMessage) => void;
   private socket: any;
 
-  constructor(onChange: (isConnected: boolean) => void, onMessage: (message:IMessage) => void) {
+  constructor(
+    onChange: (isConnected: boolean) => void,
+    onMessage: (message: IMessage) => void
+  ) {
     this.onChange = onChange;
     this.onMessage = onMessage;
-    this.socket = '';
-    this.username = readRecord('username') || 'guest';
-    this.port = '';
+    this.socket = "";
+    this.username = readRecord("username") || "guest";
+    this.port = "";
   }
 
   public connect = (username: string, port: string) => {
@@ -34,17 +37,20 @@ export default class Socket {
   };
 
   public onConnected = () => {
-    this.sendMessage({from: this.username, content: '', type: 'greet'})
+    this.sendMessage({ from: this.username, content: this.username, type: "greet" });
     this.socket.on(EVENTS.MESSAGE, this.onMessage);
     this.onChange(true);
   };
 
   public sendMessage = (message: IMessage) => {
-    debugger
-    if (typeof this.socket.emit === 'function') {
-      this.socket.emit(EVENTS.MESSAGE, message)
-    } else {
-      console.error('Cannot emit socket messages. Socket.io not connected.');
+    try {
+      if (typeof this.socket.emit === "function") {
+        this.socket.emit(EVENTS.MESSAGE, message);
+      } else {
+        console.log("Cannot emit socket messages. Socket.io not connected.");
+      }
+    } catch (e) {
+      console.log(e)
     }
   };
 
