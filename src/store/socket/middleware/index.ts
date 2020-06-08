@@ -6,9 +6,7 @@ import { IMessage } from 'src/types';
 const socketMiddleware = (store: any) => {
 
   const onConnectionChange = (isConnected: boolean) => {
-    if (!isConnected) {
-      store.dispatch(clearMessages())
-    }
+    store.dispatch(clearMessages())
     store.dispatch(connectionChanged(isConnected));
   };
 

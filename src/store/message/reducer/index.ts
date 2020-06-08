@@ -31,6 +31,7 @@ function messageReducer(state = INITIAL_STATE, action: {username?: string, type:
       };
     case CLEAR_MESSAGES:
       return {
+        ...state,
         messages: []
       }  
     default:

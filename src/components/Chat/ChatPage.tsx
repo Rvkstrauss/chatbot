@@ -14,8 +14,8 @@ const ChatPage = () => {
   const isConnected = useSelector((state: RootStateOrAny) => {
     return state.socketState.connected
   });
+  
   if (!isConnected) {
-    debugger
     connectChat();
   }
   const loading = useSelector((state: RootStateOrAny) => {

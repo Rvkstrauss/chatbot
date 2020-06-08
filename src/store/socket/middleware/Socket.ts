@@ -23,7 +23,7 @@ export default class Socket {
     this.onChange = onChange;
     this.onMessage = onMessage;
     this.socket = "";
-    this.username = readRecord("username") || "guest";
+    this.username = readRecord(config.USERNAME) || config.GUEST;
     this.port = "";
   }
 
@@ -35,10 +35,13 @@ export default class Socket {
     this.socket = io.connect(host, {query: `name=${username}`});
 
     this.socket.on(EVENTS.CONNECT, this.onConnected);
+    // this.socket.on(EVENTS.DISCONNECT, () => {
+    //   this.disconnect()
+    // })
   };
 
   public onConnected = () => {
-    this.sendMessage({ from: this.username, content: this.username, type: "greet" });
+    this.sendMessage({ from: this.username, content: this.username });
     this.socket.on(EVENTS.MESSAGE, this.onMessage);
     this.onChange(true);
   };
@@ -51,5 +54,8 @@ export default class Socket {
       }
   };
 
-  public disconnect = () => this.socket.close();
+  public disconnect = () => {
+    this.onChange(false);
+    this.socket.close();
+  }
 }
