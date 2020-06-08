@@ -1,20 +1,28 @@
-import * as React from 'react';
-import StyledMessage from './StyledMessage';
-import { IMessage } from '../../types';
+import React from "react";
+import StyledMessage from "./StyledMessage";
+import { IMessage } from "../../types";
+import Avatar from "../Avatar/Avatar";
+import styled from 'styled-components';
+import config from 'src/config';
 
-class Message extends React.Component<{ message: IMessage }> {
-  public render() {
-    const { message } = this.props;
+const Message = (props: { message: IMessage; showAvatar: boolean }) => {
+  const { message, showAvatar } = props;
 
-    return (
-      <React.Fragment>
-        <StyledMessage type={message.from}>
-          {message.content}
-        </StyledMessage>
-      </React.Fragment>
-
-    );
-  }
-}
+  return (
+    <StyledMessageContainer sender={message.from}>
+      {showAvatar && <Avatar sender={message.from} />}
+      <StyledMessage type={message.from} showAvatar={showAvatar}>
+        {message.content}
+      </StyledMessage>
+    </StyledMessageContainer>
+  );
+};
 
 export default Message;
+
+const StyledMessageContainer = styled('div')<{sender: string}>`
+  display: flex;
+  align-items: flex-end;
+  justify-content: 'flex-start';
+  flex-direction: ${(props) => props.sender !== config.MAYA ? 'row-reverse' : 'row'};
+`;

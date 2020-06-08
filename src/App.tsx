@@ -2,22 +2,21 @@ import React, {Component} from 'react';
 // import BotProvider from './utils/userProvider'
 import ChatPage from './components/Chat/ChatPage';
 import { theme } from './theme';
+import styled from 'styled-components';
 
 class App extends Component {
   public render() {
+
     return (
-      // <BotProvider>
-        <StyledAppContainer theme={theme}>
-          <ChatPage/>
-        </StyledAppContainer>
-      // </BotProvider>
+      <StyledAppContainer theme={theme}>
+        <ChatPage/>
+      </StyledAppContainer>
     )
   }
 }
 
 export default App;
 
-import styled from 'styled-components';
 
 const StyledAppContainer = styled("div")`
   display: flex;

@@ -1,6 +1,7 @@
 import * as io from "socket.io-client";
 import { IMessage } from "src/types";
 import { readRecord } from "src/utils/storage-service";
+import config from 'src/config';
 
 const EVENTS = {
   CONNECT: "connect",
@@ -30,7 +31,7 @@ export default class Socket {
     this.username = username;
     this.port = port;
 
-    const host = `http://localhost:${3001}`; // Running from local network
+    const host = `${config.SOCKET_HOST}${config.SOCKET_PORT}`; // Running from local network
     this.socket = io.connect(host);
 
     this.socket.on(EVENTS.CONNECT, this.onConnected);
@@ -43,15 +44,11 @@ export default class Socket {
   };
 
   public sendMessage = (message: IMessage) => {
-    try {
       if (typeof this.socket.emit === "function") {
         this.socket.emit(EVENTS.MESSAGE, message);
       } else {
         console.log("Cannot emit socket messages. Socket.io not connected.");
       }
-    } catch (e) {
-      console.log(e)
-    }
   };
 
   public disconnect = () => this.socket.close();

@@ -21,7 +21,8 @@ export const sendMessage = (message: IMessage) => {
 
 export const messageSent = (message: IMessage) => {
   return {
-    type: MESSAGE_SENT
+    type: MESSAGE_SENT,
+    message
   };
 };
 

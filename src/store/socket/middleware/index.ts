@@ -1,6 +1,6 @@
 import Socket from "./Socket";
 import { CONNECT_SOCKET, connectionChanged } from "../actions";
-import { messageReceived, messageSent, SEND_MESSAGE_REQUEST } from "../../message/actions";
+import { messageReceived, messageSent, SEND_MESSAGE_REQUEST, MESSAGE_SENT } from "../../message/actions";
 import { IMessage } from 'src/types';
 
 const socketMiddleware = (store: any) => {
@@ -23,10 +23,10 @@ const socketMiddleware = (store: any) => {
         break;
 
       case SEND_MESSAGE_REQUEST:
-        socket.sendMessage(action.message);
         store.dispatch(messageSent(action.message));
         break;
-
+      case MESSAGE_SENT:
+        socket.sendMessage(action.message);
       default:
         break;
     }

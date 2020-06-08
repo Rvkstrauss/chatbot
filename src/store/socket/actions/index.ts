@@ -11,6 +11,6 @@ export const connectionChanged = (isConnected: boolean) => {
 
 export const connectSocket = () => {
   return {
-    type: CONNECT_SOCKET
+    type: CONNECT_SOCKET,
   };
 };

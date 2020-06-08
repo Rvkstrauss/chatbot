@@ -1,9 +1,10 @@
 import { SEND_MESSAGE_RESPONSE, MESSAGE_SENT, USER_CHANGED } from '../actions';
 import { readRecord } from '../../../utils/storage-service';
 import { IMessage } from 'src/types';
+import config from 'src/config';
 
 const INITIAL_STATE = {
-  username: readRecord('username') || 'guest',
+  username: readRecord(config.USERNAME) || config.GUEST,
   messages: []
 };
 
@@ -14,6 +15,7 @@ function messageReducer(state = INITIAL_STATE, action: {username?: string, type:
         state, {username: action.username}
       );
     case SEND_MESSAGE_RESPONSE:
+    case MESSAGE_SENT:
       if (!action.message) {return state};
       // const isMessageTypeSent = (action.message.from === state.username);
       // action.message = Object.assign(action.message, {type: isMessageTypeSent ? 'sent'  : 'received'});
@@ -21,8 +23,6 @@ function messageReducer(state = INITIAL_STATE, action: {username?: string, type:
         ...state,
         messages: [...state.messages, action.message]
       };
-    case MESSAGE_SENT:  
-
     default:
       return state;
   }

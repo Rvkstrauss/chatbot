@@ -7,17 +7,22 @@ const bot = require("./bot");
 app.use(express.static(path.join(__dirname, "../build")));
 
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
+const clients = {};
 
 io.on("connect", (socket) => {
+  clients[socket.id] = null
   socket.on("message", (msg) => {
     const dialog = bot.respond(msg);
-    
-    // console.log(`message received from user: ${msg.from}`);
-    // console.log(`message received content: ${msg.content}`);
-    console.log('sent', msg)
-    dialog.map(msg => io.emit("message", msg));
+  
+    dialog.map(res => {
+      if(res.content) setTimeout(() => io.emit("message", res, 2000))
+      else {
+        io.emit("message", msg)
+      }
+    });
   });
 });
+
 
 const port = process.env.PORT || 3001;
 app.set("port", port);

@@ -1,8 +1,9 @@
 import { CONNECTION_CHANGED } from '../actions';
+import config from '../../../config';
 
 const INITIAL_STATE = {
   connected: false,
-  port: '3001'
+  port: config.SOCKET_PORT
 };
 
 function socketReducer(state = INITIAL_STATE, action: { type: string, port: string, connected: boolean }) {

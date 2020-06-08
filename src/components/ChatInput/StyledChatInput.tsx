@@ -12,6 +12,7 @@ const StyledChatInput = styled("form")`
   padding: 2% 3% 2% 3%;
   min-height: 9%;
     .chat {
+      font-size: 16px
       margin: 0;
       height: inherit;
       border-radius: 4px;
