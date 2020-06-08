@@ -36,7 +36,7 @@ const formMessage = (content, type) => {
   return { from: "maya", content, type };
 };
 
-const respond = ({ type, from, content }) => {
+const respond = ({ type, from, content }, client) => {
   let response = ''; 
   switch (type) {
     case "greet":

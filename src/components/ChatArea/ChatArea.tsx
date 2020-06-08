@@ -9,6 +9,7 @@ const ChatArea = () => {
   const messages = useSelector((state: RootStateOrAny) => {
     return state.messageState.messages
   });
+  
   return (
     <StyledMessagesList>
       {messages &&

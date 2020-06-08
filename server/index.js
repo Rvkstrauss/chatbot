@@ -7,18 +7,16 @@ const bot = require("./bot");
 app.use(express.static(path.join(__dirname, "../build")));
 
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
-const clients = {};
+let client = '';
 
 io.on("connect", (socket) => {
-  clients[socket.id] = null
+  client = socket.handshake.query.name;
   socket.on("message", (msg) => {
-    const dialog = bot.respond(msg);
+    console.log('received msg from client', socket, msg)
+    const dialog = bot.respond(msg, client);
   
     dialog.map(res => {
-      if(res.content) setTimeout(() => io.emit("message", res, 2000))
-      else {
-        io.emit("message", msg)
-      }
+        setTimeout(() => io.emit("message", res), 2000)
     });
   });
 });

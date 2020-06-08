@@ -6,21 +6,27 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "../../theme";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { connectSocket } from "src/store/socket/actions";
+import Loader from '../Loader';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const connectChat = () => dispatch(connectSocket());
   const isConnected = useSelector((state: RootStateOrAny) => {
-    return state.socketState.isConnected
+    return state.socketState.connected
   });
   if (!isConnected) {
+    debugger
     connectChat();
   }
+  const loading = useSelector((state: RootStateOrAny) => {
+    return state.messageState.loading
+  });
   return (
     <ThemeProvider theme={theme}>
       <StyledChatContainer>
         <ChatArea />
-        <ChatInput />
+        <ChatInput show={!loading}/>
+        <Loader show={loading}/> 
       </StyledChatContainer>
     </ThemeProvider>
   );

@@ -4,6 +4,7 @@ export const SEND_MESSAGE_RESPONSE = 'SEND_MESSAGE_RESPONSE';
 export const MESSAGE_SENT = 'MESSAGE_SENT';
 export const SEND_MESSAGE_REQUEST = 'SEND_MESSAGE_REQUEST';
 export const USER_CHANGED = 'USER_CHANGED';
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES'
 
 export const messageReceived = (message: IMessage) => {
   return {
@@ -32,3 +33,9 @@ export const changeUsername = (username: string) => {
     username
   };
 };
+
+export const clearMessages = () => {
+  return {
+    type: CLEAR_MESSAGES,
+  }
+}

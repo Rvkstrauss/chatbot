@@ -7,7 +7,7 @@ import sendButton from "../../images/submit_icon.png";
 import { IMessage } from "../../types";
 import config from 'src/config';
 
-const ChatInput = () => {
+const ChatInput = (props: { show: boolean }) => {
  
   const [chatMessage, setChatMessage] = useState("");
   const [username, setUsername] = useState(readRecord(config.USERNAME) || config.GUEST);
@@ -55,9 +55,10 @@ const ChatInput = () => {
     return false
   };
 
-  return (
-    <StyledChatInput>
+  return ( props.show ?
+    (<StyledChatInput>
       <input
+        autoFocus={true}
         className={"chat"}
         type="text"
         ref={messagesInputRef}
@@ -67,7 +68,7 @@ const ChatInput = () => {
       <button className={"send"} onClick={handleClick}>
         <img src={sendButton} />
       </button>
-    </StyledChatInput>
+    </StyledChatInput>) : null
   );
 };
 

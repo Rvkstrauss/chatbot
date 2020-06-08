@@ -32,7 +32,7 @@ export default class Socket {
     this.port = port;
 
     const host = `${config.SOCKET_HOST}${config.SOCKET_PORT}`; // Running from local network
-    this.socket = io.connect(host);
+    this.socket = io.connect(host, {query: `name=${username}`});
 
     this.socket.on(EVENTS.CONNECT, this.onConnected);
   };
