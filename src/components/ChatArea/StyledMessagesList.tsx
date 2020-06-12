@@ -7,7 +7,9 @@ const StyledMessagesList = styled("div")`
   font-size: .9em;
   width: 100%;
   height: 100%;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   padding: 20px 0;
   clear: both;
   overflow: scroll;

@@ -14,9 +14,9 @@ const calc = (showAvatar: boolean, maya: boolean, field: string) => {
       }
     case "border":
       if (!maya) {
-        return "14px";
+        return "18px";
       } else {
-        return showAvatar ? "4px 14px 14px 14px" : "14px 14px 14px 4px";
+        return showAvatar ? "4px 18px 18px 18px" : "18px 18px 18px 4px";
       }
     default:
       return;
@@ -31,9 +31,9 @@ const StyledMessage = styled("div")<{ type: string; showAvatar: boolean }>`
       : props.theme.secondaryLightColor};
   border-radius: ${(props) => calc(props.showAvatar, isFromMaya(props), 'border')}
   font-size: .9em;
-  min-width: 20px;
-  max-width: 250px;
-  padding: 8px;
+  min-width: 8%;
+  max-width: 58%;
+  padding: 9px;
   color: ${(props) =>
     !isFromMaya(props)
       ? props.theme.secondaryLightColor

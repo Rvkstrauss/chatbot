@@ -18,11 +18,6 @@ io.on("connect", (socket) => {
   }
   
   socket.on("message", (msg) => {
-    // if (clients[client] !== STATES.GREETED) {
-    //   const greeting = bot.greet(clients, client);
-    //   greeting.dialog.map((message) => io.emit("message", message));
-    //   clients[client] = greeting.state;
-    // }
     const { dialog, state } = bot.respond(msg, client, clients[client]);
     clients[client] = state;
     console.log("client msg received", msg, client, clients[client]);

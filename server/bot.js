@@ -1,11 +1,19 @@
 const STATES = require('./config');
 
 function calculate(exp) {
-  return {
-    prompt: `${eval(exp)}`,
-    followup: "That was easy, give me something harder 🤓",
-    newState: STATES.GREETED
+  try {
+    return {
+      prompt: `${eval(exp)}`,
+      followup: "That was easy, give me something harder 🤓",
+      newState: STATES.GREETED
   };
+  } catch (e) {
+    return {
+      prompt: "That's not a valid expression",
+      followup: "Try something else",
+      newState: STATES.GREETED
+    }
+  }
 }
 function introduce() {
   return {
