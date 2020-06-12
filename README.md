@@ -1,8 +1,8 @@
-# chatbot
+# Maya chatbot
 
 ##  Setup
 
-* install dependencies `npm install`
+* install dependencies: `npm install`
 * start socket server in watch mode: `npm run start:watch`
 * start chat app: `npm run start`
 
