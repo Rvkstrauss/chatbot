@@ -25,5 +25,5 @@ const StyledMessageContainer = styled('div')<{sender: string}>`
   align-items: flex-end;
   justify-content: 'flex-start';
   flex-direction: ${(props) => props.sender !== config.MAYA ? 'row-reverse' : 'row'};
-  margin-top: 9px;
+  margin: ${(props) => props.sender !== config.MAYA ? '9px 0' : '0'};
 `;
