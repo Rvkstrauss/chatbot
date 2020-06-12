@@ -1,7 +1,7 @@
 import * as React from "react";
 import Message from "../Message";
 import { IMessage } from "../../types";
-import StyledMessagesList from "./StyledMessagesList";
+import StyledChatArea from "./StyledChatArea";
 import { RootStateOrAny, useSelector } from 'react-redux';
 
 const ChatArea = () => {
@@ -11,7 +11,7 @@ const ChatArea = () => {
   });
   
   return (
-    <StyledMessagesList>
+    <StyledChatArea>
       {messages &&
         messages.map((element: IMessage, idx: number) => {
           const showAvatar = idx === messages.length - 1 || messages[idx + 1].from !== element.from;
@@ -21,7 +21,7 @@ const ChatArea = () => {
             </React.Fragment>
           ) : null;
         })}
-    </StyledMessagesList>
+    </StyledChatArea>
   );
 };
 

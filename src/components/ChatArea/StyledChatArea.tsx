@@ -1,35 +1,21 @@
-import styled from '../../theme';
+import styled from 'styled-components';
 
-const StyledChatArea = styled("section")`
-  color: ${(props) => props.theme.primaryLightColor};
-  background-color: ${(props) => props.theme.secondaryDarkColor};
-  display: inline-block;
-  position: absolute;
+const StyledChatArea = styled("div")`
+  background-color: ${props => props.theme.primaryLightColor};
+  border-top-right-radius: 4px 0;
+  border-top-left-radius: 4px 0;
+  font-size: .9em;
   width: 100%;
-  height: calc( 100vh - 125px);
-  overflow-y: scroll;
-  left: 0;
-  
-  #nickname-container {
-    clear: both;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px 0;
+  clear: both;
+  overflow: scroll;
+  ul {
+    padding: 17px;
   }
-  
-  /* ----------- Non-Retina Screens ----------- */
-@media screen 
-  and (min-device-width: 1200px) 
-  and (max-device-width: 1600px) 
-  and (-webkit-min-device-pixel-ratio: 1) {
-   overflow-y: hidden;
-}
-
-/* ----------- Retina Screens ----------- */
-@media screen 
-  and (min-device-width: 1200px) 
-  and (max-device-width: 1600px) 
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (min-resolution: 192dpi) {
-  overflow-y: hidden;
-}
 `;
 
 export default StyledChatArea;
