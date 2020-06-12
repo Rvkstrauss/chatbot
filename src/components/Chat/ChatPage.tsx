@@ -16,6 +16,7 @@ const ChatPage = () => {
   });
  
   if (!isConnected) {
+   
     connectChat();
   }
   const loading = useSelector((state: RootStateOrAny) => {
