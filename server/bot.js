@@ -38,21 +38,27 @@ const formMessage = (content) => {
   return { from: "maya", content };
 };
 
+const greet = (clients, client) => {
+
+  const { prompt, followup, newState } = response;
+  return {dialog: [formMessage(prompt), formMessage(followup)], state: newState };
+} 
+
 const respond = ({ from, content }, client, state) => {
   let response = ''; 
   switch (state) {
     case STATES.CONNECTED:
-      if (from === client && from !== 'guest') { 
-        response = greetOld(from)
-      } else { 
-        response = introduce() 
-      }
+      if (client !== 'guest' ) {
+        response = greetOld(client);
+    } else { 
+      response = introduce() 
+    }
       break;
     case STATES.INTRODUCED:
       response = greetNew(content);
       break;
     case STATES.GREETED:
-      response = calculate(content);
+      if (content) { response = calculate(content)};
       break;
     default:
       break;
@@ -63,4 +69,5 @@ const respond = ({ from, content }, client, state) => {
 
 module.exports = {
   respond,
+  greet
 };

@@ -35,13 +35,13 @@ export default class Socket {
     this.socket = io.connect(host, {query: `name=${username}`});
 
     this.socket.on(EVENTS.CONNECT, this.onConnected);
-    // this.socket.on(EVENTS.DISCONNECT, () => {
-    //   this.disconnect()
-    // })
+    this.socket.on(EVENTS.DISCONNECT, () => {
+      this.disconnect()
+    })
   };
 
   public onConnected = () => {
-    this.sendMessage({ from: this.username, content: this.username });
+    this.sendMessage({ from: this.username, content: '' });
     this.socket.on(EVENTS.MESSAGE, this.onMessage);
     this.onChange(true);
   };

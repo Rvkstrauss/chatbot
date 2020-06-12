@@ -4,7 +4,7 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const bot = require("./bot");
-const STATES = require('./config');
+const STATES = require("./config");
 
 app.use(express.static(path.join(__dirname, "../build")));
 
@@ -13,17 +13,29 @@ let clients = {};
 
 io.on("connect", (socket) => {
   const client = socket.handshake.query.name;
-  clients[client] = STATES.CONNECTED;
+  if (!clients[client]) {
+    clients[client] = STATES.CONNECTED;
+  }
+  
   socket.on("message", (msg) => {
+    // if (clients[client] !== STATES.GREETED) {
+    //   const greeting = bot.greet(clients, client);
+    //   greeting.dialog.map((message) => io.emit("message", message));
+    //   clients[client] = greeting.state;
+    // }
     const { dialog, state } = bot.respond(msg, client, clients[client]);
     clients[client] = state;
-    console.log('client msg received', msg, client, clients[client] );
+    console.log("client msg received", msg, client, clients[client]);
     if (dialog) {
       dialog.map((res) => {
         setTimeout(() => io.emit("message", res), 1000);
       });
     }
   });
+
+  socket.on('disconnect', () => {
+    clients[client] = null;
+  })
 });
 
 const port = process.env.PORT || 3001;

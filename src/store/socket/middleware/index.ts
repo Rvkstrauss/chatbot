@@ -1,26 +1,37 @@
 import Socket from "./Socket";
 import { CONNECT_SOCKET, connectionChanged } from "../actions";
-import { messageReceived, messageSent, SEND_MESSAGE_REQUEST, clearMessages } from "../../message/actions";
-import { IMessage } from 'src/types';
+import {
+  messageReceived,
+  messageSent,
+  SEND_MESSAGE_REQUEST,
+  clearMessages,
+} from "../../message/actions";
+import { IMessage } from "src/types";
 
 const socketMiddleware = (store: any) => {
-
   const onConnectionChange = (isConnected: boolean) => {
-    store.dispatch(clearMessages())
     store.dispatch(connectionChanged(isConnected));
+    
+    if (isConnected) {
+      store.dispatch(clearMessages());
+    }
   };
 
-  const onIncomingMessage = (message: IMessage) => store.dispatch(messageReceived(message));
+  const onIncomingMessage = (message: IMessage) =>
+    store.dispatch(messageReceived(message));
 
   const socket = new Socket(onConnectionChange, onIncomingMessage);
 
   return (next: any) => (action: any) => {
     const messageState = store.getState().messageState;
     const socketState = store.getState().socketState;
-    
+
     switch (action.type) {
       case CONNECT_SOCKET:
-        socket.connect(messageState.username, process.env.PORT || socketState.port);
+        socket.connect(
+          messageState.username,
+          process.env.PORT || socketState.port
+        );
         break;
 
       case SEND_MESSAGE_REQUEST:
@@ -31,7 +42,7 @@ const socketMiddleware = (store: any) => {
         break;
     }
 
-    return next(action)
+    return next(action);
   };
 };
 
